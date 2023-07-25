@@ -15,11 +15,6 @@ class UpdateHelmByMicroSvcModel:
     :type target: str
     :param target_app_version: microservice app version
     :type target_app_version: str
-
-    :param mavis_owner: mavis owner
-    :type target_app_version: str
-    :param mavis_reponame: mavis repo name
-    :type target_app_version: str
     """
 
     __slots__ = (
@@ -27,14 +22,9 @@ class UpdateHelmByMicroSvcModel:
         "head",
         "target_repo",
         "target_app_version",
-        "mavis_owner",
-        "mavis_reponame",
     )
 
     base: str
     head: str
     target_repo: str
     target_app_version: str
-
-    mavis_owner: Final[str] = "pnetwork"
-    mavis_reponame: Final[str] = "mavis"

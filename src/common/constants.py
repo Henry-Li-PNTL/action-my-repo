@@ -1,7 +1,6 @@
 from typing import Final
 
-# Repo Name
-MAVIS: Final[str] = "mavis"
-
-# Branch Name
-MASTER_BRANCH: Final[str] = "master"
+# Mavis constant value
+MAVIS_REPO: Final[str] = "mavis"
+MAVIS_OWNER: Final[str] = "pnetwork"
+MAVIS_MAIN_BRANCH: Final[str] = "master"
