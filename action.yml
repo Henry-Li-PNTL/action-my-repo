@@ -1,0 +1,38 @@
+name: "Pentium Network: Send pull request to modify Mavis Helmfile"
+description: "Auto send Pull Request to Mavis branch"
+
+branding:
+  icon: "info"
+  color: "green"
+
+inputs:
+  target_repo:
+    required: true
+    description: "Specify which micro service app version is going to be modified."
+  target_repo_app_version:
+    required: true
+    description: "Specify which micro service app version is going to be modified."
+  head:
+    required: true
+    description: "Head branch name"
+    default: mavis
+  base:
+    required: true
+    description: "Base branch name"
+    default: mavis
+  action_name:
+    required: false
+    description: Subcommand of github action. Currently support mavis-helm-update-action only.
+    default: mavis-helm-update-action
+  
+# outputs:
+
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  args:
+    - --action_name=${{ inputs.action_name }}
+    - --base=${{ inputs.head }}
+    - --head=${{ inputs.base }}
+    - --target_repo=${{ inputs.target_repo }}
+    - --target_repo_app_version=${{ inputs.target_repo_app_version }}

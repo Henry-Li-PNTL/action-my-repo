@@ -1,0 +1,8 @@
+./Readme.md
+./Dockerfile
+./pytest.ini
+./setup.cfg
+./.tool-versions
+./.gitignore
+./.flake8
+tests
