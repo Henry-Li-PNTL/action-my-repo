@@ -1,5 +1,5 @@
 # Build Stage
-FROM python:3.11-slim as builder
+FROM cr-preview.pentium.network/python:3.11-slim as builder
 
 WORKDIR /app
 
@@ -11,7 +11,7 @@ RUN poetry export --without-hashes --format=requirements.txt > requirements.txt 
     pip wheel --no-cache-dir --no-deps --wheel-dir /app/wheels -r requirements.txt
 
 # Final Stage
-FROM python:3.11-slim
+FROM cr-preview.pentium.network/python:3.11-slim
 
 WORKDIR /app
 
