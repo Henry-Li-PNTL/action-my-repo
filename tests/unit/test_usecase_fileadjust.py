@@ -88,31 +88,53 @@ SPACE_PREFIX_RAW_CONTENTS = [
             image: preview.example.com/example-app
             appVersion: 0.0.0
             pullPolicy: Always
-    """
+    """,
 ]
 
 
 @pytest.mark.parametrize(
     "data,raw_content",
     [
-        (UpdateHelmByMicroSvcModel(base="", head="", target_repo="example-app", target_app_version="20-example"), CORRECT_RAW_CONTENTS[0]),
-        (UpdateHelmByMicroSvcModel(base="", head="", target_repo="example-app", target_app_version="20-example"), CORRECT_RAW_CONTENTS[1]),
-        (UpdateHelmByMicroSvcModel(base="", head="", target_repo="example-app", target_app_version="20-example"), CORRECT_RAW_CONTENTS[2]),
-        (UpdateHelmByMicroSvcModel(base="", head="", target_repo="example-app", target_app_version="20-example"), CORRECT_RAW_CONTENTS[3]),
-        (UpdateHelmByMicroSvcModel(base="", head="", target_repo="example-app-2", target_app_version="20-example"), CORRECT_RAW_CONTENTS[4]),
+        (
+            UpdateHelmByMicroSvcModel(base="", head="", target_repo="example-app", target_app_version="20-example"),
+            CORRECT_RAW_CONTENTS[0],
+        ),
+        (
+            UpdateHelmByMicroSvcModel(base="", head="", target_repo="example-app", target_app_version="20-example"),
+            CORRECT_RAW_CONTENTS[1],
+        ),
+        (
+            UpdateHelmByMicroSvcModel(base="", head="", target_repo="example-app", target_app_version="20-example"),
+            CORRECT_RAW_CONTENTS[2],
+        ),
+        (
+            UpdateHelmByMicroSvcModel(base="", head="", target_repo="example-app", target_app_version="20-example"),
+            CORRECT_RAW_CONTENTS[3],
+        ),
+        (
+            UpdateHelmByMicroSvcModel(base="", head="", target_repo="example-app-2", target_app_version="20-example"),
+            CORRECT_RAW_CONTENTS[4],
+        ),
     ],
 )
-def test_update_helm_by_microsvc_model_with_different__appversion_position(data: UpdateHelmByMicroSvcModel, raw_content: str):
+def test_update_helm_by_microsvc_model_with_different__appversion_position(
+    data: UpdateHelmByMicroSvcModel, raw_content: str
+):
     correct_answer = raw_content.replace("01-abcdef6", data.target_app_version, 1)
     assert FileAdjustUseCase.replace_app_version(data=data, raw_content=raw_content) == correct_answer
-
 
 
 @pytest.mark.parametrize(
     "data,raw_content",
     [
-        (UpdateHelmByMicroSvcModel(base="", head="", target_repo="example-app", target_app_version="20-example"), SPACE_PREFIX_RAW_CONTENTS[0]),
-        (UpdateHelmByMicroSvcModel(base="", head="", target_repo="example-app", target_app_version="20-example"), SPACE_PREFIX_RAW_CONTENTS[1]),
+        (
+            UpdateHelmByMicroSvcModel(base="", head="", target_repo="example-app", target_app_version="20-example"),
+            SPACE_PREFIX_RAW_CONTENTS[0],
+        ),
+        (
+            UpdateHelmByMicroSvcModel(base="", head="", target_repo="example-app", target_app_version="20-example"),
+            SPACE_PREFIX_RAW_CONTENTS[1],
+        ),
     ],
 )
 def test_update_helm_by_microsvc_model_with_space_prefix_name(data: UpdateHelmByMicroSvcModel, raw_content: str):
