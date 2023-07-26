@@ -4,7 +4,7 @@
 
 | subcommand | desc |
 | --- | --- |
-| amavis-helm-update-actiondasd | 微服務 將 branch merge 進 master (微服務的master) 時，使用此 github action 會自動將 mavis helmfile.yaml 的 docker 版本號修改至最新版本號以後發 PR 到 mavis master|
+| mavis-helm-update-actiondasd | 微服務 將 branch merge 進 master (微服務的master) 時，使用此 github action 會自動將 mavis helmfile.yaml 的 docker 版本號修改至最新版本號以後發 PR 到 mavis master|
 
 
 The technology stack of this project:
@@ -16,7 +16,7 @@ The technology stack of this project:
 
 ## Example
 
-**amavis-helm-update-actiondasd**
+**mavis-helm-update-actiondasd**
 ```yaml=
 jobs:
   your_job:
