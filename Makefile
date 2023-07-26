@@ -30,4 +30,4 @@ check:
 	make tests
 
 tests:  ## Run tests
-	poetry run pytest -v  $(TEST_CASE_FOLDER)/unit
+	poetry run pytest -v  $(TEST_CASE_FOLDER)/unit --capture no
