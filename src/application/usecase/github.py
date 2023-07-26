@@ -1,7 +1,6 @@
 import base64
 import logging
 
-import github
 from github import GitRef, Repository, UnknownObjectException
 
 from src.application.usecase.exceptions import MultipleFileFoundError, NoContentError
@@ -54,9 +53,13 @@ class GithubManager():
         # TODO: Update helm file and commit changes
         # self.commit_changes()
 
-    def get_or_create_auto_pr_branch(self, branch_name: str) -> github.GitRef.GitRef:
+    def get_or_create_auto_pr_branch(self, branch_name: str) -> GitRef.GitRef:
         """Create a new branch to mavis repo if not exists
-        If exists, then reture that branch ="""
+        If exists, then reture that branch
+
+        :return: New Pull Request Base Branch Name
+        :rtype: GitRef.GitRef
+        """
         mavis_github_repo = self._get_mavis_repo()
         try:
             return self.action_github_repo.create_git_ref(mavis_github_repo, branch_name=branch_name)
@@ -77,6 +80,9 @@ class GithubManager():
         :rtype: str
         """
         try:
-            return self.action_github_repo.get_branches_from_repo(self._get_mavis_repo(), self.data.head).ref.lstrip("refs/heads/")
+            return self.action_github_repo.get_branches_from_repo(
+                self._get_mavis_repo(),
+                self.data.head
+            ).ref.lstrip("refs/heads/")
         except UnknownObjectException:
             return MAVIS_MAIN_BRANCH

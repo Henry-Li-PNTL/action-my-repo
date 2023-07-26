@@ -12,7 +12,7 @@ action_app = Typer()
 def pull_request(base: str, head: str, target_repo: str, target_repo_app_version: str) -> None:
     """Send pull request to mavis"""
     # Gather data
-    secret = GithubEnv() # type: ignore
+    secret = GithubEnv()  # type: ignore
     action_data = UpdateHelmByMicroSvcModel(base, head, target_repo, target_repo_app_version)
 
     action_github_repo = GithubRepository(secret)
