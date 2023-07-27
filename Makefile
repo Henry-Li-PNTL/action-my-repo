@@ -2,6 +2,7 @@ TEST_ENV=./tests/test.env
 LINT_DIR=./src
 TEST_CASE_FOLDER=./tests
 TEST_ARGUMENT=
+ARGS=--help
 
 .PHONY: install lint format check-coding-style check-static-type check tests
 
@@ -30,4 +31,7 @@ check:
 	make tests
 
 tests:  ## Run tests
-	poetry run pytest -v  $(TEST_CASE_FOLDER)/unit --capture no
+	GITHUB_ACCESS_TOKEN="test" poetry run pytest -v  $(TEST_CASE_FOLDER)/unit --capture no
+
+cli-test-command:  ## Run tests
+	GITHUB_ACCESS_TOKEN="test" poetry run python src/main.py $(ARGS)
