@@ -31,17 +31,26 @@ class GithubManager():
 
     def update_helm_and_pr(self) -> None:
 
-        mavis_pr_base_branch_name = self.analyze_target_branch_name(self._mavis_repo, self.data.head)
+        mavis_pr_base_branch_name = self.get_pr_base_branch_name(self._mavis_repo, self.data.head)
         mavis_pr_head_branch_ref = self.get_or_create_auto_pr_branch(
             self._mavis_repo,
             branch_name=mavis_pr_base_branch_name
         )
 
-        self.update_helm_and_commit(repo=self._mavis_repo,ref=mavis_pr_head_branch_ref)
+        self.update_helm_and_commit(repo=self._mavis_repo, ref=mavis_pr_head_branch_ref)
 
-        self.create_pull_request(repo=self._mavis_repo, head=mavis_pr_head_branch_ref.ref, base=mavis_pr_base_branch_name)
+        self.create_pull_request(
+            repo=self._mavis_repo,
+            head=mavis_pr_head_branch_ref.ref,
+            base=mavis_pr_base_branch_name
+        )
 
-    def update_helm_and_commit(self, repo: Repository.Repository, ref: GitRef.GitRef, file_path: str = "helmfile.yaml") -> None:
+    def update_helm_and_commit(
+        self,
+        repo: Repository.Repository,
+        ref: GitRef.GitRef,
+        file_path: str = "helmfile.yaml"
+    ) -> None:
         """Fetch Helmfile, Update appVersion,
 
         Args:
@@ -94,7 +103,7 @@ class GithubManager():
             logger.warning(e)
             return self.action_github_repo.create_branch(repo, branch_name=branch_name)
 
-    def analyze_target_branch_name(
+    def get_pr_base_branch_name(
         self,
         repo: Repository.Repository,
         try_branch: str,
