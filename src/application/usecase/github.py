@@ -14,11 +14,11 @@ logger = logging.getLogger(__name__)
 class GithubManager():
 
     def __init__(self, repo: GithubRepository, action_data: UpdateHelmByMicroSvcModel) -> None:
-        """
-        :param repo: Repository object of Github Action.
-        :type repo: GithubRepository
-        :param action_data: Update.
-        :type action_data: UpdateHelmByMicroSvcModel
+        """Init function
+
+        Args:
+            repo (GithubRepository): Repository object of Github Action
+            action_data (UpdateHelmByMicroSvcModel): Update action DTO
         """
         self.action_github_repo = repo
         self.data = action_data
@@ -46,14 +46,16 @@ class GithubManager():
         # TODO : analysis raw yaml content and update helmfile
 
         # TODO: Update helm file and commit changes
-        # self.commit_changes()
 
     def get_or_create_auto_pr_branch(self, branch_name: str) -> GitRef.GitRef:
         """Create a new branch to mavis repo if not exists
         If exists, then reture that branch
 
-        :return: New Pull Request Base Branch Name
-        :rtype: GitRef.GitRef
+        Args:
+            branch_name (str): Target branch name
+
+        Returns:
+            GitRef.GitRef: New Pull Request Base Branch Name
         """
         mavis_github_repo = self._get_mavis_repo()
         try:
@@ -67,12 +69,11 @@ class GithubManager():
         return self.action_github_repo.get_repo(MAVIS_OWNER, MAVIS_REPO)
 
     def analyze_target_branch_name(self) -> str:
-        """
-        The base branch of a pull request can be either "master" or
+        """The base branch of a pull request can be either "master" or
         the same as the head branch name that triggered the GitHub Action pull request event.
 
-        :return: New Pull Request Base Branch Name
-        :rtype: str
+        Returns:
+            str: New Pull Request Base Branch Name
         """
         try:
             return self.action_github_repo.get_branches_from_repo(
