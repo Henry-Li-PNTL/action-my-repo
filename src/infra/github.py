@@ -62,11 +62,3 @@ class GithubRepository(GithubRepositoryBase):
             ref=f"refs/heads/{branch_name}",
             sha=github_repo.get_branch(branching_from).commit.sha
         )
-
-    def get_git_ref(
-        self,
-        github_repo: Repository.Repository,
-        branch_name: str
-    ) -> GitRef.GitRef:
-
-        return github_repo.get_git_ref(ref=f"heads/{branch_name}")

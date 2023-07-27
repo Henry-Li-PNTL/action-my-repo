@@ -60,7 +60,7 @@ class GithubManager():
             return self.action_github_repo.create_git_ref(mavis_github_repo, branch_name=branch_name)
         except Exception as e:
             logger.warning(e)
-            return self.action_github_repo.get_git_ref(mavis_github_repo, branch_name)
+            return self.action_github_repo.get_branches_from_repo(mavis_github_repo, branch_name)
 
     def _get_mavis_repo(self) -> Repository.Repository:
         """Get mavis github repo"""

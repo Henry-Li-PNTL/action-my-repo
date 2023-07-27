@@ -55,11 +55,3 @@ class GithubRepositoryBase(GenericRepository):
         branching_from: str = MAVIS_MAIN_BRANCH,
     ) -> GitRef.GitRef:
         raise NotImplementedError
-
-    @abstractmethod
-    def get_git_ref(
-        self,
-        github_repo: Repository.Repository,
-        branch_name: str
-    ) -> GitRef.GitRef:
-        raise NotImplementedError
