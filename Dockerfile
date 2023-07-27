@@ -6,7 +6,7 @@ WORKDIR /app
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
 
-ADD Dockerfile Dockerfile
+ADD pyproject.toml pyproject.toml
 
 RUN pip install poetry
 RUN poetry export --without-hashes --format=requirements.txt > requirements.txt && \
