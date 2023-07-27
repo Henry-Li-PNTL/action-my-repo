@@ -1,6 +1,6 @@
 from typer import Typer
 
-from .application.cli import mavis_helm_update_action_app
+from src.application.cli import mavis_helm_update_action_app
 
 app = Typer()
 app.add_typer(
@@ -10,4 +10,4 @@ app.add_typer(
 
 
 if __name__ == "__main__":
-    app()
+    app()  # pragma: no cover
