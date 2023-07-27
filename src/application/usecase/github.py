@@ -78,8 +78,8 @@ class GithubManager():
         )
 
     def get_or_create_auto_pr_branch(self, repo: Repository.Repository, branch_name: str) -> GitRef.GitRef:
-        """Create a new branch to mavis repo if not exists
-        If exists, then reture that branch
+        """Return the branch ref if exists
+        otherwise, Create a new branch to mavis repo
 
         Args:
             repo (Repository.Repository): target github repo
@@ -89,10 +89,10 @@ class GithubManager():
             GitRef.GitRef: New Pull Request Base Branch Name
         """
         try:
-            return self.action_github_repo.create_branch(repo, branch_name=branch_name)
+            return self.action_github_repo.get_branch_from_repo(repo, branch_name=branch_name)
         except Exception as e:
             logger.warning(e)
-            return self.action_github_repo.get_branch_from_repo(repo, branch_name=branch_name)
+            return self.action_github_repo.create_branch(repo, branch_name=branch_name)
 
     def analyze_target_branch_name(
         self,
