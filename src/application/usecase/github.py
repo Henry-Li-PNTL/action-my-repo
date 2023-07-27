@@ -1,7 +1,7 @@
 import base64
 import logging
 
-from github import GitRef, Repository, UnknownObjectException
+from github import GitRef, UnknownObjectException
 
 from src.application.usecase.exceptions import MultipleFileFoundError, NoContentError
 from src.common.constants import MAVIS_MAIN_BRANCH, MAVIS_OWNER, MAVIS_REPO
@@ -62,7 +62,7 @@ class GithubManager():
             return self.action_github_repo.create_branch(self._mavis_repo, branch_name=branch_name)
         except Exception as e:
             logger.warning(e)
-            return self.action_github_repo.get_branches_from_repo(self._mavis_repo, branch_name)
+            return self.action_github_repo.get_branch_from_repo(self._mavis_repo, branch_name)
 
 
     def analyze_target_branch_name(self) -> str:
@@ -73,7 +73,7 @@ class GithubManager():
             str: New Pull Request Base Branch Name
         """
         try:
-            return self.action_github_repo.get_branches_from_repo(
+            return self.action_github_repo.get_branch_from_repo(
                 self._mavis_repo,
                 self.data.head
             ).ref.lstrip("refs/heads/")

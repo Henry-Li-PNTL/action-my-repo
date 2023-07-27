@@ -1,9 +1,9 @@
 from typer import Typer
 
+from src.application.config import github_env
 from src.application.usecase.github import GithubManager
 from src.domain.model.action import UpdateHelmByMicroSvcModel
 from src.infra.github import GithubRepository
-from src.application.config import github_env
 
 action_app = Typer()
 

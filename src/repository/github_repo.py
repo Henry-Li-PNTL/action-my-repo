@@ -19,7 +19,7 @@ class GithubRepositoryBase(GenericRepository):
         raise NotImplementedError
 
     @abstractmethod
-    def get_branches_from_repo(self, github_repo: Repository.Repository, branch_name: str) -> GitRef.GitRef:
+    def get_branch_from_repo(self, github_repo: Repository.Repository, branch_name: str) -> GitRef.GitRef:
         raise NotImplementedError
 
     @abstractmethod

@@ -18,7 +18,7 @@ class GithubRepository(GithubRepositoryBase):
     def get_repo(self, owner: str, repo_name: str) -> Repository.Repository:
         return self._github_obj.get_repo(f"{owner}/{repo_name}")
 
-    def get_branches_from_repo(self, github_repo: Repository.Repository, branch_name: str) -> GitRef.GitRef:
+    def get_branch_from_repo(self, github_repo: Repository.Repository, branch_name: str) -> GitRef.GitRef:
         return github_repo.get_git_ref(ref=f"heads/{branch_name}")
 
     def get_file(
