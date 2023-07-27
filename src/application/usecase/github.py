@@ -25,17 +25,12 @@ class GithubManager():
 
     def update_helm_and_pr(self) -> None:
 
-        mavis_pr_base_branch_name = self.analysis_target_branch_name()
+        mavis_pr_base_branch_name = self.analyze_target_branch_name()
 
-        # Get or create auto pr branch
         ref = self.get_or_create_auto_pr_branch(branch_name=mavis_pr_base_branch_name)
 
-        # fetch content and update helm file
-        # commit changes
         self.update_helm(ref=ref)
 
-        # create pull request
-        # self.create_pull_request()
 
     def update_helm(self, ref: GitRef.GitRef, file_path: str = "helmfile.yaml") -> None:
         content_file = self.action_github_repo.get_file(file_path, ref, github_repo=self._get_mavis_repo())
@@ -71,7 +66,7 @@ class GithubManager():
         """Get mavis github repo"""
         return self.action_github_repo.get_repo(MAVIS_OWNER, MAVIS_REPO)
 
-    def analysis_target_branch_name(self) -> str:
+    def analyze_target_branch_name(self) -> str:
         """
         The base branch of a pull request can be either "master" or
         the same as the head branch name that triggered the GitHub Action pull request event.

@@ -40,7 +40,7 @@ jobs:
 
 ```
 .
-├── example                # Example yaml file which demostate usage of this custom github action
+├── example                # Example yaml file which demonstrate usage of this custom github action
 ├── src                    # Custom Github Action Source Code
 │   ├── application        # Application level of this github action
 │   │   ├── cli            # Entry point of cli
