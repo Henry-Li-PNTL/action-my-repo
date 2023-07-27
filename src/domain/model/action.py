@@ -3,17 +3,13 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True)
 class UpdateHelmByMicroSvcModel:
-    """
-    Contain all data fro github action
+    """Contain all data fro github action
 
-    :param base: Branch merge into
-    :type base: str
-    :param head: Branch merge from
-    :type head: str
-    :param target: microservice name
-    :type target: str
-    :param target_app_version: microservice app version
-    :type target_app_version: str
+    Args:
+        base (str): Branch merge into
+        head (str): Branch merge from
+        target (str): microservice name
+        target_app_version (str): microservice app version
     """
 
     __slots__ = (

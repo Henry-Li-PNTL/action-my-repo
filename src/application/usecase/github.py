@@ -19,18 +19,19 @@ class GithubManager():
         return self.action_github_repo.get_repo(MAVIS_OWNER, MAVIS_REPO)
 
     def __init__(self, repo: GithubRepository, action_data: UpdateHelmByMicroSvcModel) -> None:
-        """
-        :param repo: Repository object of Github Action.
-        :type repo: GithubRepository
-        :param action_data: Update.
-        :type action_data: UpdateHelmByMicroSvcModel
+        """Init function
+
+        Args:
+            repo (GithubRepository): Repository object of Github Action
+            action_data (UpdateHelmByMicroSvcModel): Update action DTO
         """
         self.action_github_repo = repo
         self.data = action_data
+        self._mavis_repo = self.action_github_repo.get_repo(MAVIS_OWNER, MAVIS_REPO)
 
     def update_helm_and_pr(self) -> None:
 
-        mavis_pr_base_branch_name = self.analysis_target_branch_name()
+        mavis_pr_base_branch_name = self.analyze_target_branch_name()
 
         # Get or create auto pr branch
         mavis_pr_head_branch_ref = self.get_or_create_auto_pr_branch(branch_name=mavis_pr_base_branch_name)
@@ -71,27 +72,28 @@ class GithubManager():
         """Create a new branch to mavis repo if not exists
         If exists, then reture that branch
 
-        :return: New Pull Request Base Branch Name
-        :rtype: GitRef.GitRef
+        Args:
+            branch_name (str): Target branch name
+
+        Returns:
+            GitRef.GitRef: New Pull Request Base Branch Name
         """
-        mavis_github_repo = self._get_mavis_repo()
         try:
-            return self.action_github_repo.create_git_ref(mavis_github_repo, branch_name=branch_name)
+            return self.action_github_repo.create_branch(self._mavis_repo, branch_name=branch_name)
         except Exception as e:
             logger.warning(e)
-            return self.action_github_repo.get_git_ref(mavis_github_repo, branch_name)
+            return self.action_github_repo.get_branch_from_repo(self._mavis_repo, branch_name)
 
-    def analysis_target_branch_name(self) -> str:
-        """
-        The base branch of a pull request can be either "master" or
+    def analyze_target_branch_name(self) -> str:
+        """The base branch of a pull request can be either "master" or
         the same as the head branch name that triggered the GitHub Action pull request event.
 
-        :return: New Pull Request Base Branch Name
-        :rtype: str
+        Returns:
+            str: New Pull Request Base Branch Name
         """
         try:
-            return self.action_github_repo.get_branches_from_repo(
-                self._get_mavis_repo(),
+            return self.action_github_repo.get_branch_from_repo(
+                self._mavis_repo,
                 self.data.head
             ).ref.lstrip("refs/heads/")
         except UnknownObjectException:
@@ -130,17 +132,3 @@ class GithubManager():
             base=base,
             head=head
         )
-#         """"""
-
-#         mavis_repo = self._get_mavis_repo()
-#         mavis_repo.create_pull(
-#             title=f"This is a pull request for new feature {index}",
-#             body="""SUMMARY
-# Change HTTP library used to send requests
-
-# TESTS
-# - [x] Send 'GET' request
-# - [x] Send 'POST' request with/without body""",
-#             base="main",
-#             head=new_branch_name
-#         )

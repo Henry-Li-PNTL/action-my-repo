@@ -19,7 +19,7 @@ class GithubRepositoryBase(GenericRepository):
         raise NotImplementedError
 
     @abstractmethod
-    def get_branches_from_repo(self, github_repo: Repository.Repository, branch_name: str) -> GitRef.GitRef:
+    def get_branch_from_repo(self, github_repo: Repository.Repository, branch_name: str) -> GitRef.GitRef:
         raise NotImplementedError
 
     @abstractmethod
@@ -44,22 +44,10 @@ class GithubRepositoryBase(GenericRepository):
         raise NotImplementedError
 
     @abstractmethod
-    def create_branch(self, github_repo: Repository.Repository, branch_name: str) -> GitRef.GitRef:
-        raise NotImplementedError
-
-    @abstractmethod
-    def create_git_ref(
+    def create_branch(
         self,
         github_repo: Repository.Repository,
         branch_name: str,
         branching_from: str = MAVIS_MAIN_BRANCH,
-    ) -> GitRef.GitRef:
-        raise NotImplementedError
-
-    @abstractmethod
-    def get_git_ref(
-        self,
-        github_repo: Repository.Repository,
-        branch_name: str
     ) -> GitRef.GitRef:
         raise NotImplementedError
