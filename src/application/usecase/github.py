@@ -31,10 +31,13 @@ class GithubManager():
 
     def update_helm_and_pr(self) -> None:
 
-        mavis_pr_base_branch_name = self.analyze_target_branch_name()
+        mavis_pr_base_branch_name = self.analyze_target_branch_name(self._mavis_repo, self.data.head)
 
         # Get or create auto pr branch
-        mavis_pr_head_branch_ref = self.get_or_create_auto_pr_branch(branch_name=mavis_pr_base_branch_name)
+        mavis_pr_head_branch_ref = self.get_or_create_auto_pr_branch(
+            self._mavis_repo,
+            branch_name=mavis_pr_base_branch_name
+        )
 
         # fetch content and update helm file and commit changes
         self.update_helm_and_commit(ref=mavis_pr_head_branch_ref)
@@ -68,7 +71,7 @@ class GithubManager():
             branch=ref.ref
         )
 
-    def get_or_create_auto_pr_branch(self, branch_name: str) -> GitRef.GitRef:
+    def get_or_create_auto_pr_branch(self, repo: Repository.Repository, branch_name: str) -> GitRef.GitRef:
         """Create a new branch to mavis repo if not exists
         If exists, then reture that branch
 
@@ -79,12 +82,17 @@ class GithubManager():
             GitRef.GitRef: New Pull Request Base Branch Name
         """
         try:
-            return self.action_github_repo.create_branch(self._mavis_repo, branch_name=branch_name)
+            return self.action_github_repo.create_branch(repo, branch_name=branch_name)
         except Exception as e:
             logger.warning(e)
-            return self.action_github_repo.get_branch_from_repo(self._mavis_repo, branch_name)
+            return self.action_github_repo.get_branch_from_repo(repo, branch_name=branch_name)
 
-    def analyze_target_branch_name(self) -> str:
+    def analyze_target_branch_name(
+        self,
+        repo: Repository.Repository,
+        try_branch: str,
+        default_branch: str = MAVIS_MAIN_BRANCH
+    ) -> str:
         """The base branch of a pull request can be either "master" or
         the same as the head branch name that triggered the GitHub Action pull request event.
 
@@ -93,11 +101,11 @@ class GithubManager():
         """
         try:
             return self.action_github_repo.get_branch_from_repo(
-                self._mavis_repo,
-                self.data.head
+                repo,
+                try_branch
             ).ref.lstrip("refs/heads/")
         except UnknownObjectException:
-            return MAVIS_MAIN_BRANCH
+            return default_branch
 
     def create_pull_request(
         self,
