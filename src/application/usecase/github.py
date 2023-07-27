@@ -22,6 +22,7 @@ class GithubManager():
         """
         self.action_github_repo = repo
         self.data = action_data
+        self._mavis_repo = self.action_github_repo.get_repo(MAVIS_OWNER, MAVIS_REPO)
 
     def update_helm_and_pr(self) -> None:
 
@@ -33,7 +34,7 @@ class GithubManager():
 
 
     def update_helm(self, ref: GitRef.GitRef, file_path: str = "helmfile.yaml") -> None:
-        content_file = self.action_github_repo.get_file(file_path, ref, github_repo=self._get_mavis_repo())
+        content_file = self.action_github_repo.get_file(file_path, ref, github_repo=self._mavis_repo)
 
         if isinstance(content_file, list):
             raise MultipleFileFoundError(f"Multiple files found for {file_path} | ref={ref}")
@@ -57,16 +58,12 @@ class GithubManager():
         Returns:
             GitRef.GitRef: New Pull Request Base Branch Name
         """
-        mavis_github_repo = self._get_mavis_repo()
         try:
-            return self.action_github_repo.create_git_ref(mavis_github_repo, branch_name=branch_name)
+            return self.action_github_repo.create_git_ref(self._mavis_repo, branch_name=branch_name)
         except Exception as e:
             logger.warning(e)
-            return self.action_github_repo.get_branches_from_repo(mavis_github_repo, branch_name)
+            return self.action_github_repo.get_branches_from_repo(self._mavis_repo, branch_name)
 
-    def _get_mavis_repo(self) -> Repository.Repository:
-        """Get mavis github repo"""
-        return self.action_github_repo.get_repo(MAVIS_OWNER, MAVIS_REPO)
 
     def analyze_target_branch_name(self) -> str:
         """The base branch of a pull request can be either "master" or
@@ -77,7 +74,7 @@ class GithubManager():
         """
         try:
             return self.action_github_repo.get_branches_from_repo(
-                self._get_mavis_repo(),
+                self._mavis_repo,
                 self.data.head
             ).ref.lstrip("refs/heads/")
         except UnknownObjectException:
