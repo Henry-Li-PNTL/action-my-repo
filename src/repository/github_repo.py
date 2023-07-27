@@ -44,11 +44,7 @@ class GithubRepositoryBase(GenericRepository):
         raise NotImplementedError
 
     @abstractmethod
-    def create_branch(self, github_repo: Repository.Repository, branch_name: str) -> GitRef.GitRef:
-        raise NotImplementedError
-
-    @abstractmethod
-    def create_git_ref(
+    def create_branch(
         self,
         github_repo: Repository.Repository,
         branch_name: str,

@@ -46,13 +46,7 @@ class GithubRepository(GithubRepositoryBase):
             branch=branch_name
         )
 
-    def create_branch(self, github_repo: Repository.Repository, branch_name: str) -> GitRef.GitRef:
-        return github_repo.create_git_ref(
-            ref=f"refs/heads/{branch_name}",
-            sha=github_repo.get_branch(MAVIS_MAIN_BRANCH).commit.sha
-        )
-
-    def create_git_ref(
+    def create_branch(
         self,
         github_repo: Repository.Repository,
         branch_name: str,

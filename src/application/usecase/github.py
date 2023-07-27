@@ -59,7 +59,7 @@ class GithubManager():
             GitRef.GitRef: New Pull Request Base Branch Name
         """
         try:
-            return self.action_github_repo.create_git_ref(self._mavis_repo, branch_name=branch_name)
+            return self.action_github_repo.create_branch(self._mavis_repo, branch_name=branch_name)
         except Exception as e:
             logger.warning(e)
             return self.action_github_repo.get_branches_from_repo(self._mavis_repo, branch_name)
