@@ -1,6 +1,7 @@
 import pytest
 
 from src.application.usecase.file_adjust import FileAdjustUseCase
+from src.common.constants import MAVIS_REPO
 from src.domain.model.action import UpdateHelmByMicroSvcModel
 
 RAW_HELM_FIEL_CONTENTS = [
@@ -96,23 +97,23 @@ SPACE_PREFIX_RAW_HELM_FIEL_CONTENTS = [
     "data,raw_content",
     [
         (
-            UpdateHelmByMicroSvcModel(base="", head="", target_repo="example-app", target_app_version="20-example"),
+            UpdateHelmByMicroSvcModel(base="", head="", target_repo="example-app", target_app_version="20-example", pr_to=MAVIS_REPO),
             RAW_HELM_FIEL_CONTENTS[0],
         ),
         (
-            UpdateHelmByMicroSvcModel(base="", head="", target_repo="example-app", target_app_version="20-example"),
+            UpdateHelmByMicroSvcModel(base="", head="", target_repo="example-app", target_app_version="20-example", pr_to=MAVIS_REPO),
             RAW_HELM_FIEL_CONTENTS[1],
         ),
         (
-            UpdateHelmByMicroSvcModel(base="", head="", target_repo="example-app", target_app_version="20-example"),
+            UpdateHelmByMicroSvcModel(base="", head="", target_repo="example-app", target_app_version="20-example", pr_to=MAVIS_REPO),
             RAW_HELM_FIEL_CONTENTS[2],
         ),
         (
-            UpdateHelmByMicroSvcModel(base="", head="", target_repo="example-app", target_app_version="20-example"),
+            UpdateHelmByMicroSvcModel(base="", head="", target_repo="example-app", target_app_version="20-example", pr_to=MAVIS_REPO),
             RAW_HELM_FIEL_CONTENTS[3],
         ),
         (
-            UpdateHelmByMicroSvcModel(base="", head="", target_repo="example-app-2", target_app_version="20-example"),
+            UpdateHelmByMicroSvcModel(base="", head="", target_repo="example-app-2", target_app_version="20-example", pr_to=MAVIS_REPO),
             RAW_HELM_FIEL_CONTENTS[4],
         ),
     ],
@@ -128,11 +129,11 @@ def test_replace_appversion_with_different__appversion_position(
     "data,raw_content",
     [
         (
-            UpdateHelmByMicroSvcModel(base="", head="", target_repo="example-app", target_app_version="20-example"),
+            UpdateHelmByMicroSvcModel(base="", head="", target_repo="example-app", target_app_version="20-example", pr_to=MAVIS_REPO),
             SPACE_PREFIX_RAW_HELM_FIEL_CONTENTS[0],
         ),
         (
-            UpdateHelmByMicroSvcModel(base="", head="", target_repo="example-app", target_app_version="20-example"),
+            UpdateHelmByMicroSvcModel(base="", head="", target_repo="example-app", target_app_version="20-example", pr_to=MAVIS_REPO),
             SPACE_PREFIX_RAW_HELM_FIEL_CONTENTS[1],
         ),
     ],
