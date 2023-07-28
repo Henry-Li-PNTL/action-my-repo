@@ -35,20 +35,20 @@ class GithubManager():
         """
         self.action_github_repo = repo
         self.data = action_data
-        self._mavis_repo = self._get_github_repo(MAVIS_OWNER, MAVIS_REPO)
+        self._pnetwork_repo = self._get_github_repo(MAVIS_OWNER, action_data.pr_to)
 
     def update_helm_and_pr(self) -> None:
 
-        mavis_pr_base_branch_name = self.get_pr_base_branch_name(self._mavis_repo, self.data.head)
+        mavis_pr_base_branch_name = self.get_pr_base_branch_name(self._pnetwork_repo, self.data.head)
         mavis_pr_head_branch_ref = self.get_or_create_auto_pr_branch(
-            self._mavis_repo,
-            branch_name=mavis_pr_base_branch_name
+            self._pnetwork_repo,
+            branch_name=f"auto-pr-helmfile-update-{self.data.target_repo}-{self.data.target_app_version}"
         )
 
-        self.update_helm_and_commit(repo=self._mavis_repo, ref=mavis_pr_head_branch_ref)
+        self.update_helm_and_commit(repo=self._pnetwork_repo, ref=mavis_pr_head_branch_ref)
 
         self.create_pull_request(
-            repo=self._mavis_repo,
+            repo=self._pnetwork_repo,
             head=mavis_pr_head_branch_ref.ref,
             base=mavis_pr_base_branch_name
         )
@@ -159,8 +159,8 @@ class GithubManager():
                                          If it's None, will give a proper default body.
         """
 
-        pr_title = title or "[Auto Pull Request] Update helmfile for micro service"
-        f"'{self.data.target_repo}' appVersion to {self.data.target_app_version}"
+        pr_title = title or "[Auto Pull Request] Update helmfile for micro service" + \
+        f" '{self.data.target_repo}' appVersion to {self.data.target_app_version}"
         pr_body = body or f"""{pr_title}"""
 
         repo.create_pull(

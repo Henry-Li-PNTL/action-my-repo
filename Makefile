@@ -35,3 +35,6 @@ tests:  ## Run tests
 
 cli-test-command:  ## Run tests
 	GITHUB_ACCESS_TOKEN="test" poetry run python src/main.py $(ARGS)
+
+cli-local-test-command:  ## Run tests
+	GITHUB_ACCESS_TOKEN=${GITHUB_ACCESS_TOKEN_LOCALDEV} poetry run python src/main.py $(ARGS)
