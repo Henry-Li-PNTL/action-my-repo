@@ -39,30 +39,25 @@ class GithubManager():
 
     def update_helm_and_pr(self) -> None:
 
-        mavis_pr_base_branch_name = self.get_pr_base_branch_name(self._pnetwork_repo, self.data.head)
-        mavis_pr_head_branch_ref = self.get_or_create_auto_pr_branch(
-            self._pnetwork_repo,
-            branch_name=f"auto-pr-helmfile-update-{self.data.target_repo}-{self.data.target_app_version}"
-        )
+        new_pr_branch_name = f"auto-pr-helmfile-update-{self.data.target_repo}-{self.data.target_app_version}"
+        mavis_pr_base_branch_name = self.get_pr_base_branch_name(self.data.head)
+        mavis_pr_head_branch_ref = self.get_or_create_auto_pr_branch(branch_name=new_pr_branch_name)
 
-        self.update_helm_and_commit(repo=self._pnetwork_repo, ref=mavis_pr_head_branch_ref)
+        self.update_helm_and_commit(ref=mavis_pr_head_branch_ref)
 
         self.create_pull_request(
-            repo=self._pnetwork_repo,
             head=mavis_pr_head_branch_ref.ref,
             base=mavis_pr_base_branch_name
         )
 
     def update_helm_and_commit(
         self,
-        repo: Repository.Repository,
         ref: GitRef.GitRef,
         file_path: str = "helmfile.yaml"
     ) -> None:
         """Fetch Helmfile, Update appVersion,
 
         Args:
-            repo (Repository.Repository): Github repo
             ref (GitRef.GitRef): Branch we fetch file from
             file_path (str, optional): file path. Defaults to "helmfile.yaml".
 
@@ -71,7 +66,7 @@ class GithubManager():
             NoContentError: if file is not found
         """
 
-        content_file = self.action_github_repo.get_file(file_path, ref, github_repo=repo)
+        content_file = self.action_github_repo.get_file(file_path, ref, github_repo=self._pnetwork_repo)
 
         if isinstance(content_file, list):
             raise MultipleFileFoundError(f"Multiple files found for {file_path} | ref={ref}")
@@ -84,7 +79,7 @@ class GithubManager():
         _clean_content = FileAdjustUseCase.replace_app_version(self.data, _raw_content)
 
         # Update helm file and commit changes
-        repo.update_file(
+        self._pnetwork_repo.update_file(
             path=file_path,
             message=f"chore: update helmfile {self.data.target_repo} appVersion to {self.data.target_app_version}",
             content=_clean_content,
@@ -92,7 +87,7 @@ class GithubManager():
             branch=ref.ref
         )
 
-    def get_or_create_auto_pr_branch(self, repo: Repository.Repository, branch_name: str) -> GitRef.GitRef:
+    def get_or_create_auto_pr_branch(self, branch_name: str) -> GitRef.GitRef:
         """Return the branch ref if exists
         otherwise, Create a new branch to mavis repo
 
@@ -104,14 +99,13 @@ class GithubManager():
             GitRef.GitRef: New Pull Request Base Branch Name
         """
         try:
-            return self.action_github_repo.get_branch_from_repo(repo, branch_name=branch_name)
+            return self.action_github_repo.get_branch_from_repo(self._pnetwork_repo, branch_name=branch_name)
         except Exception as e:
             logger.warning(e)
-            return self.action_github_repo.create_branch(repo, branch_name=branch_name)
+            return self.action_github_repo.create_branch(self._pnetwork_repo, branch_name=branch_name)
 
     def get_pr_base_branch_name(
         self,
-        repo: Repository.Repository,
         try_branch: str,
         default_branch: str = MAVIS_MAIN_BRANCH
     ) -> str:
@@ -119,7 +113,6 @@ class GithubManager():
         the same as the head branch name that triggered the GitHub Action pull request event.
 
         Args:
-            repo (Repository.Repository): _description_
             try_branch (str): return try_branch if exists.
             default_branch (str, optional): if try_branch is not exists, then use this default_branch name.
                                             Defaults to MAVIS_MAIN_BRANCH.
@@ -129,7 +122,7 @@ class GithubManager():
         """
         try:
             return self.action_github_repo.get_branch_from_repo(
-                repo,
+                self._pnetwork_repo,
                 try_branch
             ).ref.lstrip("refs/heads/")
         except UnknownObjectException:
@@ -137,7 +130,6 @@ class GithubManager():
 
     def create_pull_request(
         self,
-        repo: Repository.Repository,
         head: str,
         base: str,
         title: str | None = None,
@@ -148,7 +140,6 @@ class GithubManager():
         Merge head to base.
 
         Args:
-            repo (Repository.Repository): _description_
             head (str): New Pull Request Base Branch Name. IMPORTANT: Don't need to add 'heads' prefix to branch name
             base (str): New Pull Request Base Branch Name. IMPORTANT: Don't need to add 'heads' prefix to Base name
             title (str | None, optional): New Pull Request Title. Defaults to None.
@@ -161,7 +152,7 @@ class GithubManager():
             f"'{self.data.target_repo}' appVersion to {self.data.target_app_version}"
         pr_body = body or f"{pr_title}"
 
-        repo.create_pull(
+        self._pnetwork_repo.create_pull(
             title=pr_title,
             body=pr_body,
             base=base,
