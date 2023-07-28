@@ -26,7 +26,6 @@ class GithubManager():
         """
         return self.action_github_repo.get_repo(owner, repo_name)
 
-
     def __init__(self, repo: GithubRepository, action_data: UpdateHelmByMicroSvcModel) -> None:
         """Init function
 
@@ -124,7 +123,8 @@ class GithubManager():
         Args:
             repo (Repository.Repository): _description_
             try_branch (str): return try_branch if exists.
-            default_branch (str, optional): if try_branch is not exists, then use this default_branch name. Defaults to MAVIS_MAIN_BRANCH.
+            default_branch (str, optional): if try_branch is not exists, then use this default_branch name.
+                                            Defaults to MAVIS_MAIN_BRANCH.
 
         Returns:
             str: New Pull Request Base Branch Name
@@ -153,8 +153,10 @@ class GithubManager():
             repo (Repository.Repository): _description_
             head (str): New Pull Request Base Branch Name. IMPORTANT: Don't need to add 'heads' prefix to branch name
             base (str): New Pull Request Base Branch Name. IMPORTANT: Don't need to add 'heads' prefix to Base name
-            title (str | None, optional): New Pull Request Title. Defaults to None. If it's None, will give a proper default title.
-            body (str | None, optional): New Pull Request Body. Defaults to None. If it's None, will give a proper default body.
+            title (str | None, optional): New Pull Request Title. Defaults to None.
+                                          If it's None, will give a proper default title.
+            body (str | None, optional): New Pull Request Body. Defaults to None.
+                                         If it's None, will give a proper default body.
         """
 
         pr_title = title or "[Auto Pull Request] Update helmfile for micro service"
