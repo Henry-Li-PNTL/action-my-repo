@@ -1,5 +1,3 @@
-from typing import Any
-
 from github import Auth, ContentFile, Github, GitRef, Repository
 
 from src.common.constants import MAVIS_MAIN_BRANCH
@@ -28,23 +26,6 @@ class GithubRepository(GithubRepositoryBase):
         github_repo: Repository.Repository,
     ) -> ContentFile.ContentFile | list[ContentFile.ContentFile]:
         return github_repo.get_contents(path=file_path, ref=ref.ref)
-
-    def update_file(
-        self,
-        file_path: str,
-        commit_message: str,
-        update_content: str,
-        content_file: ContentFile.ContentFile,
-        github_repo: Repository.Repository,
-        branch_name: str,
-    ) -> dict[str, Any]:
-        return github_repo.update_file(
-            path=file_path,
-            message=commit_message,
-            content=update_content,
-            sha=content_file.sha,
-            branch=branch_name
-        )
 
     def create_branch(
         self,

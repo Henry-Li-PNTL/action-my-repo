@@ -1,5 +1,4 @@
 from abc import abstractmethod
-from typing import Any
 
 from github import ContentFile, GitRef, Repository
 
@@ -29,18 +28,6 @@ class GithubRepositoryBase(GenericRepository):
         ref: GitRef.GitRef,
         github_repo: Repository.Repository,
     ) -> ContentFile.ContentFile | list[ContentFile.ContentFile]:
-        raise NotImplementedError
-
-    @abstractmethod
-    def update_file(
-        self,
-        file_path: str,
-        commit_message: str,
-        update_content: str,
-        content_file: ContentFile.ContentFile,
-        github_repo: Repository.Repository,
-        branch_name: str
-    ) -> dict[str, Any]:
         raise NotImplementedError
 
     @abstractmethod

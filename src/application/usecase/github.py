@@ -81,11 +81,9 @@ class GithubManager():
 
         _raw_content = base64.b64decode(content_file.content).decode('utf-8')
 
-        # analysis raw yaml content and update helmfile
         _clean_content = FileAdjustUseCase.replace_app_version(self.data, _raw_content)
 
         # Update helm file and commit changes
-        # Commit file change to the commit sha we clone
         repo.update_file(
             path=file_path,
             message=f"chore: update helmfile {self.data.target_repo} appVersion to {self.data.target_app_version}",
@@ -159,9 +157,9 @@ class GithubManager():
                                          If it's None, will give a proper default body.
         """
 
-        pr_title = title or "[Auto Pull Request] Update helmfile for micro service"
-        f"'{self.data.target_repo}' appVersion to {self.data.target_app_version}"
-        pr_body = body or f"""{pr_title}"""
+        pr_title = title or "[Auto Pull Request] Update helmfile for micro service" + \
+            f"'{self.data.target_repo}' appVersion to {self.data.target_app_version}"
+        pr_body = body or f"{pr_title}"
 
         repo.create_pull(
             title=pr_title,
