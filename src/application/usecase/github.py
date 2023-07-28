@@ -14,9 +14,18 @@ logger = logging.getLogger(__name__)
 
 class GithubManager():
 
-    def _get_mavis_repo(self) -> Repository.Repository:
-        """Get mavis github repo"""
-        return self.action_github_repo.get_repo(MAVIS_OWNER, MAVIS_REPO)
+    def _get_github_repo(self, owner: str, repo_name: str) -> Repository.Repository:
+        """Get github repository
+
+        Args:
+            owner (str): Owner of Github repository
+            repo_name (str): Name of Github repository
+
+        Returns:
+            Repository.Repository: Github repo
+        """
+        return self.action_github_repo.get_repo(owner, repo_name)
+
 
     def __init__(self, repo: GithubRepository, action_data: UpdateHelmByMicroSvcModel) -> None:
         """Init function
@@ -27,7 +36,7 @@ class GithubManager():
         """
         self.action_github_repo = repo
         self.data = action_data
-        self._mavis_repo = self.action_github_repo.get_repo(MAVIS_OWNER, MAVIS_REPO)
+        self._mavis_repo = self._get_github_repo(MAVIS_OWNER, MAVIS_REPO)
 
     def update_helm_and_pr(self) -> None:
 
