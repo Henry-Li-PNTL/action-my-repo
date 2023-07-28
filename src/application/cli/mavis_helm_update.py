@@ -16,7 +16,6 @@ def pull_request(base: str, head: str, target_repo: str, target_repo_app_version
     action_data = UpdateHelmByMicroSvcModel(base, head, target_repo, target_repo_app_version, pr_to)
 
     action_github_repo = GithubRepository(github_env)
-    print(github_env)
 
     # Use Case
     manager = GithubManager(action_github_repo, action_data)
