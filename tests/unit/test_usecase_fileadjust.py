@@ -3,7 +3,7 @@ import pytest
 from src.application.usecase.file_adjust import FileAdjustUseCase
 from src.domain.model.action import UpdateHelmByMicroSvcModel
 
-CORRECT_RAW_CONTENTS = [
+RAW_HELM_FIEL_CONTENTS = [
     """
 - name: example-app
   <<: *anchor
@@ -68,7 +68,7 @@ CORRECT_RAW_CONTENTS = [
         pullPolicy: Always""",
 ]
 
-SPACE_PREFIX_RAW_CONTENTS = [
+SPACE_PREFIX_RAW_HELM_FIEL_CONTENTS = [
     """
     - name: example-app
     values:
@@ -97,23 +97,23 @@ SPACE_PREFIX_RAW_CONTENTS = [
     [
         (
             UpdateHelmByMicroSvcModel(base="", head="", target_repo="example-app", target_app_version="20-example"),
-            CORRECT_RAW_CONTENTS[0],
+            RAW_HELM_FIEL_CONTENTS[0],
         ),
         (
             UpdateHelmByMicroSvcModel(base="", head="", target_repo="example-app", target_app_version="20-example"),
-            CORRECT_RAW_CONTENTS[1],
+            RAW_HELM_FIEL_CONTENTS[1],
         ),
         (
             UpdateHelmByMicroSvcModel(base="", head="", target_repo="example-app", target_app_version="20-example"),
-            CORRECT_RAW_CONTENTS[2],
+            RAW_HELM_FIEL_CONTENTS[2],
         ),
         (
             UpdateHelmByMicroSvcModel(base="", head="", target_repo="example-app", target_app_version="20-example"),
-            CORRECT_RAW_CONTENTS[3],
+            RAW_HELM_FIEL_CONTENTS[3],
         ),
         (
             UpdateHelmByMicroSvcModel(base="", head="", target_repo="example-app-2", target_app_version="20-example"),
-            CORRECT_RAW_CONTENTS[4],
+            RAW_HELM_FIEL_CONTENTS[4],
         ),
     ],
 )
@@ -129,11 +129,11 @@ def test_update_helm_by_microsvc_model_with_different__appversion_position(
     [
         (
             UpdateHelmByMicroSvcModel(base="", head="", target_repo="example-app", target_app_version="20-example"),
-            SPACE_PREFIX_RAW_CONTENTS[0],
+            SPACE_PREFIX_RAW_HELM_FIEL_CONTENTS[0],
         ),
         (
             UpdateHelmByMicroSvcModel(base="", head="", target_repo="example-app", target_app_version="20-example"),
-            SPACE_PREFIX_RAW_CONTENTS[1],
+            SPACE_PREFIX_RAW_HELM_FIEL_CONTENTS[1],
         ),
     ],
 )

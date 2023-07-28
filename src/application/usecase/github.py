@@ -5,7 +5,7 @@ from github import GitRef, Repository, UnknownObjectException
 
 from src.application.usecase.exceptions import MultipleFileFoundError, NoContentError
 from src.application.usecase.file_adjust import FileAdjustUseCase
-from src.common.constants import MAVIS_MAIN_BRANCH, MAVIS_OWNER, MAVIS_REPO
+from src.common.constants import MAVIS_MAIN_BRANCH, MAVIS_OWNER
 from src.domain.model.action import UpdateHelmByMicroSvcModel
 from src.infra.github import GithubRepository
 
@@ -13,6 +13,17 @@ logger = logging.getLogger(__name__)
 
 
 class GithubManager():
+
+    def __init__(self, repo: GithubRepository, action_data: UpdateHelmByMicroSvcModel) -> None:
+        """Init function
+
+        Args:
+            repo (GithubRepository): Repository object of Github Action
+            action_data (UpdateHelmByMicroSvcModel): Update action DTO
+        """
+        self.action_github_repo = repo
+        self.data = action_data
+        self._pnetwork_repo = self._get_github_repo(MAVIS_OWNER, action_data.pr_to)
 
     def _get_github_repo(self, owner: str, repo_name: str) -> Repository.Repository:
         """Get github repository
@@ -25,17 +36,6 @@ class GithubManager():
             Repository.Repository: Github repo
         """
         return self.action_github_repo.get_repo(owner, repo_name)
-
-    def __init__(self, repo: GithubRepository, action_data: UpdateHelmByMicroSvcModel) -> None:
-        """Init function
-
-        Args:
-            repo (GithubRepository): Repository object of Github Action
-            action_data (UpdateHelmByMicroSvcModel): Update action DTO
-        """
-        self.action_github_repo = repo
-        self.data = action_data
-        self._pnetwork_repo = self._get_github_repo(MAVIS_OWNER, action_data.pr_to)
 
     def update_helm_and_pr(self) -> None:
 
@@ -81,11 +81,9 @@ class GithubManager():
 
         _raw_content = base64.b64decode(content_file.content).decode('utf-8')
 
-        # analysis raw yaml content and update helmfile
         _clean_content = FileAdjustUseCase.replace_app_version(self.data, _raw_content)
 
         # Update helm file and commit changes
-        # Commit file change to the commit sha we clone
         repo.update_file(
             path=file_path,
             message=f"chore: update helmfile {self.data.target_repo} appVersion to {self.data.target_app_version}",
@@ -160,8 +158,8 @@ class GithubManager():
         """
 
         pr_title = title or "[Auto Pull Request] Update helmfile for micro service" + \
-        f" '{self.data.target_repo}' appVersion to {self.data.target_app_version}"
-        pr_body = body or f"""{pr_title}"""
+            f"'{self.data.target_repo}' appVersion to {self.data.target_app_version}"
+        pr_body = body or f"{pr_title}"
 
         repo.create_pull(
             title=pr_title,
