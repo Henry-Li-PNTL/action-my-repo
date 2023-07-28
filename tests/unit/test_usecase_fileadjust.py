@@ -117,7 +117,7 @@ SPACE_PREFIX_RAW_HELM_FIEL_CONTENTS = [
         ),
     ],
 )
-def test_update_helm_by_microsvc_model_with_different__appversion_position(
+def test_replace_appversion_with_different__appversion_position(
     data: UpdateHelmByMicroSvcModel, raw_content: str
 ):
     correct_answer = raw_content.replace("01-abcdef6", data.target_app_version, 1)
@@ -137,5 +137,5 @@ def test_update_helm_by_microsvc_model_with_different__appversion_position(
         ),
     ],
 )
-def test_update_helm_by_microsvc_model_with_space_prefix_name(data: UpdateHelmByMicroSvcModel, raw_content: str):
+def test_replace_appversion_with_space_prefix_name(data: UpdateHelmByMicroSvcModel, raw_content: str):
     assert FileAdjustUseCase.replace_app_version(data=data, raw_content=raw_content) == raw_content
