@@ -31,6 +31,4 @@ class FileAdjustUseCase:
             return str(m.group().replace(m.groupdict()["appVersion"], data.target_app_version))
 
         pattern = FIND_SPECIFY_MICROSVC_RE.format(data.target_repo)
-        clean_file = re.sub(pattern, group_adjust_fn, raw_content, flags=re.DOTALL)
-
-        return clean_file
+        return re.sub(pattern, group_adjust_fn, raw_content, flags=re.DOTALL)
