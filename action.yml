@@ -22,6 +22,10 @@ inputs:
     required: false
     description: Subcommand of github action. Currently support mavis-helm-update-action only.
     default: mavis-helm-update-action
+  sub_action_name:
+    required: false
+    description: Subcommand of github action. Currently support mavis-helm-update-action only.
+    default: pull-request
   pr_to:
     required: false
     description: Subcommand of github action. Currently support mavis-helm-update-action only.
@@ -34,6 +38,7 @@ runs:
   image: "Dockerfile"
   args:
     - ${{ inputs.action_name }}
+    - ${{ inputs.sub_action_name }}
     - ${{ inputs.head }}
     - ${{ inputs.base }}
     - ${{ inputs.target_repo }}
