@@ -12,11 +12,12 @@ jobs:
     outputs:
       tag: ${{ steps.tag.outputs.TAG }}
     steps:
-    - name: Get tag
-      id: tag
-      run: |
-        echo "TAG=${GITHUB_RUN_NUMBER}-$(echo ${GITHUB_SHA}| cut -c 1-7)"  >> $GITHUB_OUTPUT
-        
+      - name: Get tag
+        id: tag
+        run: |
+          echo "TAG=${GITHUB_RUN_NUMBER}-$(echo ${GITHUB_SHA}| cut -c 1-3)"  >> $GITHUB_OUTPUT
+          env
+
   release-on-github:
     needs: get-tag
     runs-on: ubuntu-latest
@@ -29,14 +30,17 @@ jobs:
           tag: "dev-release-${{  needs.get-tag.outputs.tag }}"
           tag_exists_error: false
           message: "Release for e2e test for ${{  needs.get-tag.outputs.tag }}"
-          github_token: ${{ secrets.DEV_GITHUB_ACCESS_TOKEN }}
+          github_token: ${{ secrets.PNOPS_GITHUB_REPO_TOKEN }}
+          # github_token: ${{ secrets.DEV_GITHUB_ACCESS_TOKEN }}
           force_push_tag: true
 
+          
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.DEV_GITHUB_ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PNOPS_GITHUB_REPO_TOKEN }}
+          # GITHUB_TOKEN: ${{ secrets.DEV_GITHUB_ACCESS_TOKEN }}
         with:
           tag_name: "dev-release-${{  needs.get-tag.outputs.tag }}"
           release_name: "Release dev-release-${{  needs.get-tag.outputs.tag }}"

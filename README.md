@@ -33,6 +33,7 @@ jobs:
         head: ${{ github.HEAD_REF }}
         target_repo: pare-example
         target_repo_app_version: v0.0.0
+        pr_to: mavis
 ```
 
 

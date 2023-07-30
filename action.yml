@@ -15,15 +15,17 @@ inputs:
   head:
     required: true
     description: "Head branch name"
-    default: mavis
   base:
     required: true
     description: "Base branch name"
-    default: mavis
   action_name:
     required: false
     description: Subcommand of github action. Currently support mavis-helm-update-action only.
     default: mavis-helm-update-action
+  pr_to:
+    required: false
+    description: Subcommand of github action. Currently support mavis-helm-update-action only.
+    default: mavis
   
 # outputs:
 
@@ -31,8 +33,9 @@ runs:
   using: "docker"
   image: "Dockerfile"
   args:
-    - --action_name=${{ inputs.action_name }}
-    - --base=${{ inputs.head }}
-    - --head=${{ inputs.base }}
-    - --target_repo=${{ inputs.target_repo }}
-    - --target_repo_app_version=${{ inputs.target_repo_app_version }}
+    - ${{ inputs.action_name }}
+    - ${{ inputs.head }}
+    - ${{ inputs.base }}
+    - ${{ inputs.target_repo }}
+    - ${{ inputs.target_repo_app_version }}
+    - --pr_to=${{ inputs.pr_to }}
