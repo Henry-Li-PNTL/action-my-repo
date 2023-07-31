@@ -5,6 +5,7 @@ WORKDIR /app
 
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONPATH "${PYTHONPATH}:/app"
 
 ADD pyproject.toml pyproject.toml
 ADD poetry.lock poetry.lock
@@ -25,4 +26,4 @@ RUN pip install -U pip && pip install --no-cache /wheels/*
 COPY . .
 
 
-ENTRYPOINT ["python", "-i", "src/main.py", "mavis-helm-update-action"]
+ENTRYPOINT ["python", "src/main.py"]
