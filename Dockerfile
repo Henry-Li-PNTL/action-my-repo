@@ -10,6 +10,7 @@ ADD poetry.lock poetry.lock
 
 COPY . /
 RUN pip install poetry
-RUN cd / && poetry install
+RUN poetry export --without-hashes --without dev --format=requirements.txt > requirements.txt && \
+    pip install -r requirements.txt
 
 CMD ["python", "/src/main.py", "--help"]
