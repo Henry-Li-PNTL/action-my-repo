@@ -14,7 +14,27 @@ The technology stack of this project:
 - Pygithub
 - Pydantic-settings
 
-## Example
+<!-- vscode-markdown-toc -->
+* [Example](#Example)
+* [Folder Structure](#FolderStructure)
+	* [Prerequisites:](#Prerequisites:)
+* [Build develop environment](#Builddevelopenvironment)
+	* [Develop on Local [Build]](#DeveloponLocalBuild)
+* [Below is frequently used command and it is optional](#Belowisfrequentlyusedcommandanditisoptional)
+	* [How to use formatter to format code](#Howtouseformattertoformatcode)
+	* [How to check whether coding style is fit the team style or not](#Howtocheckwhethercodingstyleisfittheteamstyleornot)
+	* [How to check whether static type is fit the team style or not](#Howtocheckwhetherstatictypeisfittheteamstyleornot)
+	* [How to test code](#Howtotestcode)
+	* [How to install pre-commit hooks](#Howtoinstallpre-commithooks)
+
+<!-- vscode-markdown-toc-config
+	numbering=false
+	autoSave=true
+	/vscode-markdown-toc-config -->
+<!-- /vscode-markdown-toc -->
+
+
+## <a name='Example'></a>Example
 
 **mavis-helm-update-action**
 ```yaml=
@@ -29,6 +49,7 @@ jobs:
       uses: pnetwork/dev-github-action-auto-update-helm@v1
       with:
         action: "mavis-helm-update-action"
+        sub_action: "pull-request"
         base: ${{ github.BASE_REF }}
         head: ${{ github.HEAD_REF }}
         target_repo: pare-example
@@ -37,7 +58,7 @@ jobs:
 ```
 
 
-## Folder Structure
+## <a name='FolderStructure'></a>Folder Structure
 
 ```
 .
@@ -54,7 +75,7 @@ jobs:
 └── tests                  # test file
 ```
 
-### Prerequisites:
+### <a name='Prerequisites:'></a>Prerequisites:
 
 Python 3.11.3
 
@@ -63,42 +84,42 @@ Python 3.11.3
 
 
 ----
-## Build develop environment
+## <a name='Builddevelopenvironment'></a>Build develop environment
 
-### Develop on Local [Build]
+### <a name='DeveloponLocalBuild'></a>Develop on Local [Build]
 
 ```shell
 make install
 ```
 ----
 
-## Below is frequently used command and it is optional
+## <a name='Belowisfrequentlyusedcommandanditisoptional'></a>Below is frequently used command and it is optional
 
-### How to use formatter to format code
+### <a name='Howtouseformattertoformatcode'></a>How to use formatter to format code
 
 ```shell
 make format
 ```
 
-### How to check whether coding style is fit the team style or not
+### <a name='Howtocheckwhethercodingstyleisfittheteamstyleornot'></a>How to check whether coding style is fit the team style or not
 
 ```shell
 make check-coding-style
 ```
 
-### How to check whether static type is fit the team style or not
+### <a name='Howtocheckwhetherstatictypeisfittheteamstyleornot'></a>How to check whether static type is fit the team style or not
 
 ```shell
 make check-static-type
 ```
 
-### How to test code
+### <a name='Howtotestcode'></a>How to test code
 
 ```shell
 make test
 ```
 
-### How to install pre-commit hooks
+### <a name='Howtoinstallpre-commithooks'></a>How to install pre-commit hooks
 
 ```shell
 make install-pre-commit-hooks
