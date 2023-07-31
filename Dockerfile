@@ -8,8 +8,8 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ADD pyproject.toml pyproject.toml
 ADD poetry.lock poetry.lock
 
-RUN pip install poetry
-RUN poetry install
+# RUN pip install poetry
+# RUN poetry install
 COPY . .
 
 ENTRYPOINT ["ls"]
