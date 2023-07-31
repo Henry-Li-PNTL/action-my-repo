@@ -7,9 +7,7 @@ on:
 
 jobs:
   get-tag:
-    runs-on: general
-    container:
-      image: cr-preview.pentium.network/basic-action:1.0.0
+    runs-on: ubuntu-latest
     outputs:
       tag: ${{ steps.tag.outputs.TAG }}
     steps:
@@ -31,16 +29,14 @@ jobs:
           tag: "dev-release-${{  needs.get-tag.outputs.tag }}"
           tag_exists_error: false
           message: "Release for e2e test for ${{  needs.get-tag.outputs.tag }}"
-          github_token: ${{ secrets.PNOPS_GITHUB_REPO_TOKEN }}
-          # github_token: ${{ secrets.DEV_GITHUB_ACCESS_TOKEN }}
+          github_token: ${{ secrets.SECRET_KEY }}
           force_push_tag: true
 
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.PNOPS_GITHUB_REPO_TOKEN }}
-          # GITHUB_TOKEN: ${{ secrets.DEV_GITHUB_ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.SECRET_KEY }}
         with:
           tag_name: "dev-release-${{  needs.get-tag.outputs.tag }}"
           release_name: "Release dev-release-${{  needs.get-tag.outputs.tag }}"
