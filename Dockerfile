@@ -32,4 +32,4 @@ COPY . .
 
 RUN cd src
 
-RUN ["ls"]
+ENTRYPOINT ["ls"]
