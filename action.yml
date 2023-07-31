@@ -1,4 +1,4 @@
-wname: "Pentium Network: Send pull request to modify Mavis Helmfile"
+name: "Pentium Network: Send pull request to modify Mavis Helmfile"
 description: "Auto send Pull Request to Mavis branch"
 
 branding:
