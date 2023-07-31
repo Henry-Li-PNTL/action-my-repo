@@ -7,9 +7,7 @@ on:
 
 jobs:
   get-tag:
-    runs-on: general
-    container:
-      image: cr-preview.pentium.network/basic-action:1.0.0
+    runs-on: ubuntu-latest
     outputs:
       tag: ${{ steps.tag.outputs.TAG }}
     steps:
