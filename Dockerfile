@@ -19,6 +19,10 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONPATH "${PYTHONPATH}:/app"
+
 COPY --from=builder /app/wheels /wheels
 COPY --from=builder /app/requirements.txt .
 
