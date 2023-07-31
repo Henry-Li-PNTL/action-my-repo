@@ -12,4 +12,4 @@ ADD poetry.lock poetry.lock
 # RUN poetry install
 COPY . .
 
-CMD ["ls"]
+CMD ["ls", "/"]
