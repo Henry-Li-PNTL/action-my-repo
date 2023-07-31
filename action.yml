@@ -36,7 +36,7 @@ inputs:
 runs:
   using: "docker"
   image: "Dockerfile"
-  args:
+  # args:
   #   - ${{ inputs.action_name }}
   #   - ${{ inputs.sub_action_name }}
   #   - ${{ inputs.head }}
