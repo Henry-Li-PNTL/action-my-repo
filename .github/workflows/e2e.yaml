@@ -14,8 +14,9 @@ jobs:
     steps:
       - name: Get tag
         id: tag
+          # echo "TAG=${GITHUB_RUN_NUMBER}-$(echo ${GITHUB_SHA}| cut -c 1-3)"  >> $GITHUB_OUTPUT
         run: |
-          echo "TAG=${GITHUB_RUN_NUMBER}-$(echo ${GITHUB_SHA}| cut -c 1-3)"  >> $GITHUB_OUTPUT
+          echo "TAG=${GITHUB_RUN_NUMBER}"  >> $GITHUB_OUTPUT
           env
 
   release-on-github:
@@ -34,7 +35,7 @@ jobs:
           # github_token: ${{ secrets.DEV_GITHUB_ACCESS_TOKEN }}
           force_push_tag: true
 
-          
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
