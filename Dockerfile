@@ -13,4 +13,4 @@ RUN pip install poetry
 RUN poetry export --without-hashes --without dev --format=requirements.txt > requirements.txt && \
     pip install -r requirements.txt
 
-CMD ["python", "/src/main.py", "--help"]
+ENTRYPOINT ["python", "/src/main.py"]
