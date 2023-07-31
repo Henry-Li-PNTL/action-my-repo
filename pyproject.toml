@@ -3,7 +3,7 @@ name = "dev-github-action-auto-update-helm"
 version = "0.1.0"
 description = ""
 authors = ["HenryLi <henry.li@pentium.nerwork>"]
-readme = "Readme.md"
+readme = "README.md"
 packages = [{include = "src"}]
 
 [tool.poetry.dependencies]
