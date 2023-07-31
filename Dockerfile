@@ -12,4 +12,4 @@ COPY . /
 RUN pip install poetry
 RUN cd / && poetry install
 
-CMD ["ls", "/"]
+CMD ["python", "/src/main.py", "--help"]
