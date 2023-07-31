@@ -32,4 +32,4 @@ COPY . .
 
 RUN cd src
 
-ENTRYPOINT ["ls"]
+ENTRYPOINT ["cwd;", "ls;", "ls .."]
