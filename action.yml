@@ -36,11 +36,11 @@ inputs:
 runs:
   using: "docker"
   image: "Dockerfile"
-  args:
-    - ${{ inputs.action_name }}
-    - ${{ inputs.sub_action_name }}
-    - ${{ inputs.head }}
-    - ${{ inputs.base }}
-    - ${{ inputs.target_repo }}
-    - ${{ inputs.target_repo_app_version }}
-    - --pr_to=${{ inputs.pr_to }}
+  # args:
+  #   - ${{ inputs.action_name }}
+  #   - ${{ inputs.sub_action_name }}
+  #   - ${{ inputs.head }}
+  #   - ${{ inputs.base }}
+  #   - ${{ inputs.target_repo }}
+  #   - ${{ inputs.target_repo_app_version }}
+  #   - --pr_to=${{ inputs.pr_to }}
