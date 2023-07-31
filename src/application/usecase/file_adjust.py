@@ -1,7 +1,7 @@
 import re
 
-from src.common.constants import FIND_SPECIFY_MICROSVC_RE
-from src.domain.model.action import UpdateHelmByMicroSvcModel
+from common.constants import FIND_SPECIFY_MICROSVC_RE
+from domain.model.action import UpdateHelmByMicroSvcModel
 
 
 class FileAdjustUseCase:

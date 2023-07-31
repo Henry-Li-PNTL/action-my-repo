@@ -3,7 +3,7 @@ import os
 import pytest
 from pydantic_core._pydantic_core import ValidationError
 
-from src.domain.model.env import GithubEnv
+from domain.model.env import GithubEnv
 
 
 def test_githubenv_init_from_environment():

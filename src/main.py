@@ -1,6 +1,6 @@
 from typer import Typer
 
-from src.application.cli import mavis_helm_update_action_app
+from application.cli import mavis_helm_update_action_app
 
 app = Typer()
 app.add_typer(

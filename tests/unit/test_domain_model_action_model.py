@@ -2,7 +2,7 @@ from dataclasses import FrozenInstanceError
 
 import pytest
 
-from src.domain.model.action import UpdateHelmByMicroSvcModel
+from domain.model.action import UpdateHelmByMicroSvcModel
 
 
 def test_frozen_dataclass_cannot_change():

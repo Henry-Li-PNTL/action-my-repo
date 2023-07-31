@@ -1,9 +1,9 @@
 from github import Auth, ContentFile, Github, GitRef, Repository
 
-from src.common.constants import MAVIS_MAIN_BRANCH
-from src.domain.model.env import GithubEnv
+from common.constants import MAVIS_MAIN_BRANCH
+from domain.model.env import GithubEnv
 
-from ..repository.github_repo import GithubRepositoryBase
+from repository.github_repo import GithubRepositoryBase
 
 
 class GithubRepository(GithubRepositoryBase):

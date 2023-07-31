@@ -1,8 +1,8 @@
 import pytest
 
-from src.application.usecase.file_adjust import FileAdjustUseCase
-from src.common.constants import MAVIS_REPO
-from src.domain.model.action import UpdateHelmByMicroSvcModel
+from application.usecase.file_adjust import FileAdjustUseCase
+from common.constants import MAVIS_REPO
+from domain.model.action import UpdateHelmByMicroSvcModel
 
 RAW_HELM_FIEL_CONTENTS = [
     """

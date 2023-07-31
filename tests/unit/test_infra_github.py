@@ -1,7 +1,7 @@
 import os
 
-from src.domain.model.env import GithubEnv
-from src.infra.github import GithubRepository
+from domain.model.env import GithubEnv
+from infra.github import GithubRepository
 
 
 def test_infra_githubrepository_init():

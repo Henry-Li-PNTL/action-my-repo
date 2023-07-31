@@ -1,10 +1,10 @@
 from typer import Typer
 
-from src.application.config import github_env
-from src.application.usecase.github import GithubManager
-from src.common.constants import MAVIS_REPO
-from src.domain.model.action import UpdateHelmByMicroSvcModel
-from src.infra.github import GithubRepository
+from application.config import github_env
+from application.usecase.github import GithubManager
+from common.constants import MAVIS_REPO
+from domain.model.action import UpdateHelmByMicroSvcModel
+from infra.github import GithubRepository
 
 action_app = Typer()
 

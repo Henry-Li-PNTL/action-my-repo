@@ -2,7 +2,7 @@ from abc import abstractmethod
 
 from github import ContentFile, GitRef, Repository
 
-from src.common.constants import MAVIS_MAIN_BRANCH
+from common.constants import MAVIS_MAIN_BRANCH
 
 from . import GenericRepository
 
