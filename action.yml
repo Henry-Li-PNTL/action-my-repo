@@ -43,4 +43,4 @@ runs:
     - ${{ inputs.base }}
     - ${{ inputs.target_repo }}
     - ${{ inputs.target_repo_app_version }}
-    - --pr_to=${{ inputs.pr_to }}
+    - --pr-to=${{ inputs.pr_to }}
