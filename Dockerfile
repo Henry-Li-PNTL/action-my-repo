@@ -22,6 +22,7 @@ WORKDIR /app
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONPATH "${PYTHONPATH}:/app"
+ENV PYTHONPATH "${PYTHONPATH}:/github/workspace"
 
 COPY --from=builder /app/wheels /wheels
 COPY --from=builder /app/requirements.txt .
