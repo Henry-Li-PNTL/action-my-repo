@@ -3,6 +3,7 @@ on:
     branches:
       - "mavis-1743-dev-gh-action-e2e"
       - "test-release"
+      - "*"
 
 jobs:
   get-tag:
